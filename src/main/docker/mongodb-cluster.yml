@@ -1,0 +1,16 @@
+version: '2'
+services:
+  appiron-mongodb:
+    image: mongo:4.2.7
+    ports:
+      - '27017:27017'
+    command: mongos --configdb csvr/appiron-mongodb-config --bind_ip 0.0.0.0
+  appiron-mongodb-node:
+    build:
+      context: .
+      dockerfile: mongodb/MongoDB.Dockerfile
+    command: mongod --shardsvr --replSet rs1
+  appiron-mongodb-config:
+    image: mongo:4.2.7
+    container_name: appiron-mongodb-config
+    command: mongod --configsvr --dbpath /data/db --replSet csvr
