@@ -1,0 +1,28 @@
+{
+  "appironApp": {
+    "abonne": {
+      "home": {
+        "title": "Abonnes",
+        "createLabel": "Créer un nouveau Abonne",
+        "createOrEditLabel": "Créer ou éditer un Abonne",
+        "search": "Recherche pour Abonne",
+        "notFound": "Aucun Abonne trouvé"
+      },
+      "created": "Un nouveau Abonne a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Abonne avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Abonne avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Abonne {{ id }} ?"
+      },
+      "detail": {
+        "title": "Abonne"
+      },
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phoneNumber": "Phone Number",
+      "cin": "Cin",
+      "card": "Card",
+      "abonnements": "Abonnements"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-abonnement-heading" jhiTranslate="appironApp.abonnement.home.createOrEditLabel">Create or edit a Abonnement</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonnement.departement" for="field_departement">Departement</label>
+          <select class="form-control" name="departement" formControlName="departement" id="field_departement">
+            <option value="MUSCULATION">{{ 'appironApp.Departement.MUSCULATION' | translate }}</option>
+            <option value="KICKBOXING">{{ 'appironApp.Departement.KICKBOXING' | translate }}</option>
+            <option value="TAEKWONDO">{{ 'appironApp.Departement.TAEKWONDO' | translate }}</option>
+            <option value="BOX">{{ 'appironApp.Departement.BOX' | translate }}</option>
+            <option value="DANCE">{{ 'appironApp.Departement.DANCE' | translate }}</option>
+            <option value="GYMNASTIQUE">{{ 'appironApp.Departement.GYMNASTIQUE' | translate }}</option>
+            <option value="KARATE">{{ 'appironApp.Departement.KARATE' | translate }}</option>
+            <option value="JIUJITSU">{{ 'appironApp.Departement.JIUJITSU' | translate }}</option>
+            <option value="JUDO">{{ 'appironApp.Departement.JUDO' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonnement.abType" for="field_abType">Ab Type</label>
+          <select class="form-control" name="abType" formControlName="abType" id="field_abType">
+            <option value="SEANCE">{{ 'appironApp.AbType.SEANCE' | translate }}</option>
+            <option value="SEMAINE1">{{ 'appironApp.AbType.SEMAINE1' | translate }}</option>
+            <option value="SEMAINE2">{{ 'appironApp.AbType.SEMAINE2' | translate }}</option>
+            <option value="MOIS1">{{ 'appironApp.AbType.MOIS1' | translate }}</option>
+            <option value="MOIS2">{{ 'appironApp.AbType.MOIS2' | translate }}</option>
+            <option value="MOIS3">{{ 'appironApp.AbType.MOIS3' | translate }}</option>
+            <option value="MOIS6">{{ 'appironApp.AbType.MOIS6' | translate }}</option>
+            <option value="AN">{{ 'appironApp.AbType.AN' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonnement.date" for="field_date">Date</label>
+          <div class="d-flex">
+            <input
+              id="field_date"
+              type="datetime-local"
+              class="form-control"
+              name="date"
+              formControlName="date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonnement.price" for="field_price">Price</label>
+          <input type="number" class="form-control" name="price" id="field_price" formControlName="price" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonnement.pay" for="field_pay">Pay</label>
+          <input type="number" class="form-control" name="pay" id="field_pay" formControlName="pay" />
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_utilisateur">Utilisateur</label>
+          <select class="form-control" name="utilisateur" formControlName="utilisateur" id="field_utilisateur">
+            <option *ngFor="let employee of employees" value="{{ employee?.fullName }}">{{ employee?.fullName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

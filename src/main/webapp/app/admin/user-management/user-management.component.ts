@@ -36,7 +36,10 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account => (this.currentAccount = account));
+    this.accountService.identity().subscribe(account => {
+      this.currentAccount = account;
+      console.error(this.currentAccount);
+    });
     this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
     this.handleNavigation();
   }

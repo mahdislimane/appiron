@@ -1,0 +1,92 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="abonne">
+      <h2>
+        <span jhiTranslate="appironApp.abonne.detail.title">Abonne</span>
+        <span *ngIf="abonne?.firstName && abonne?.lastName"> {{ abonne?.firstName }}&nbsp;{{ abonne?.lastName }} </span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+      <div class="row">
+        <div class="col-4">
+          <dl>
+            <dt><span jhiTranslate="appironApp.abonne.phoneNumber">Phone Number</span></dt>
+            <dd>
+              <span>{{ abonne.phoneNumber }}</span>
+            </dd>
+          </dl>
+        </div>
+        <div class="col-4">
+          <dl>
+            <dt><span jhiTranslate="appironApp.abonne.cin">Cin</span></dt>
+            <dd>
+              <span>{{ abonne.cin }}</span>
+            </dd>
+          </dl>
+        </div>
+        <div class="col-4">
+          <dl>
+            <dt><span jhiTranslate="appironApp.abonne.card">Card</span></dt>
+            <dd>
+              <span>{{ abonne.card }}</span>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <dl>
+        <dd>
+          <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th>
+                  <span>Departement</span>
+                </th>
+                <th>
+                  <span>Type d'abonnement</span>
+                </th>
+                <th>
+                  <span>Date</span>
+                </th>
+                <th>
+                  <span>Prix</span>
+                </th>
+                <th><span>Payée</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let abonnementsEmploye of abonnementsEmployee">
+                <td style="padding: 0.5rem;" *ngIf="abonnementsEmploye.abonnes[0]?.id === abonne.id">
+                  <div>{{ abonnementsEmploye.departement }}</div>
+                </td>
+
+                <td style="padding: 0.5rem;" *ngIf="abonnementsEmploye.abonnes[0]?.id === abonne.id">
+                  <div><span jhiTranslate="appironApp.AbType.{{ abonnementsEmploye.abType }}"> </span></div>
+                </td>
+                <td style="padding: 0.5rem;" *ngIf="abonnementsEmploye.abonnes[0]?.id === abonne.id">
+                  <div>{{ abonnementsEmploye.date | date }}</div>
+                </td>
+                <td style="padding: 0.5rem;" *ngIf="abonnementsEmploye.abonnes[0]?.id === abonne.id">
+                  <div>{{ abonnementsEmploye.price }}</div>
+                </td>
+                <td style="padding: 0.5rem;" *ngIf="abonnementsEmploye.abonnes[0]?.id === abonne.id">
+                  <div>{{ abonnementsEmploye.pay }}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button *jhiHasAnyAuthority="['ROLE_ADMIN']" type="button" [routerLink]="['/abonne', abonne.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

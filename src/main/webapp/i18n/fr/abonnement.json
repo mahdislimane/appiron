@@ -1,0 +1,29 @@
+{
+  "appironApp": {
+    "abonnement": {
+      "home": {
+        "title": "Abonnements",
+        "createLabel": "Créer un nouveau Abonnement",
+        "createOrEditLabel": "Créer ou éditer un Abonnement",
+        "search": "Recherche pour Abonnement",
+        "notFound": "Aucun Abonnement trouvé"
+      },
+      "created": "Un nouveau Abonnement a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Abonnement avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Abonnement avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Abonnement {{ id }} ?"
+      },
+      "detail": {
+        "title": "Abonnement"
+      },
+      "departement": "Departement",
+      "abType": "Type d'Abonnement",
+      "date": "Date",
+      "price": "Price",
+      "pay": "Pay",
+      "rest": "Credit",
+      "abonne": "Abonne"
+    }
+  }
+}

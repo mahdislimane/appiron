@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="abonnement">
+      <h2><span jhiTranslate="appironApp.abonnement.detail.title">Abonnement</span> {{ abonnement.id }}</h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="appironApp.abonnement.departement">Departement</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'appironApp.Departement.' + abonnement.departement }}">{{ abonnement.departement }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.abonnement.abType">Ab Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'appironApp.AbType.' + abonnement.abType }}">{{ abonnement.abType }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.abonnement.date">Date</span></dt>
+        <dd>
+          <span>{{ abonnement.date }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.abonnement.price">Price</span></dt>
+        <dd>
+          <span>{{ abonnement.price }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.abonnement.pay">Pay</span></dt>
+        <dd>
+          <span>{{ abonnement.pay }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button
+        type="button"
+        *jhiHasAnyAuthority="['ROLE_ADMIN']"
+        [routerLink]="['/abonnement', abonnement.id, 'edit']"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,150 @@
+<div>
+  <h2 id="page-heading">
+    <span jhiTranslate="appironApp.employee.home.title">Employees</span>
+
+    <button
+      *jhiHasAnyAuthority="['ROLE_ADMIN']"
+      id="jh-create-entity"
+      class="btn btn-primary float-right jh-create-entity create-employee"
+      [routerLink]="['/employee/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span class="hidden-sm-down" jhiTranslate="appironApp.employee.home.createLabel">
+        Create a new Employee
+      </span>
+    </button>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            (change)="searchEmployee()"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'appironApp.employee.home.search' | translate }}"
+          />
+
+          <button class="input-group-append btn btn-info" (click)="searchEmployee()">
+            <fa-icon icon="search"></fa-icon>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="resetSearch()" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employees?.length === 0">
+    <span jhiTranslate="appironApp.employee.home.notFound">No employees found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employees && employees.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="fullName">
+            <span jhiTranslate="appironApp.employee.fullName">Full Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="jobTitle">
+            <span jhiTranslate="appironApp.employee.jobTitle">Job Title</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="phoneNumber">
+            <span jhiTranslate="appironApp.employee.phoneNumber">Phone Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="month.id"><span>Mois Concerné</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="date.id"><span>Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="avance.id"><span>avance</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of difEmployees; trackBy: trackId">
+          <td>{{ employee.fullName }}</td>
+          <td jhiTranslate="{{ 'appironApp.JobTitle.' + employee.jobTitle }}">{{ employee.jobTitle }}</td>
+          <td>{{ employee.phoneNumber }}</td>
+          <td>
+            <div *ngFor="let paymentsEmploye of paymentsEmployee">
+              <div *ngIf="paymentsEmploye.employees[0]?.id === employee.id">
+                {{ paymentsEmploye.month }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngFor="let paymentsEmploye of paymentsEmployee">
+              <div *ngIf="paymentsEmploye.employees[0]?.id === employee.id">
+                {{ paymentsEmploye.date | date }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngFor="let paymentsEmploye of paymentsEmployee">
+              <div *ngIf="paymentsEmploye.employees[0]?.id === employee.id">
+                {{ paymentsEmploye.avance }}
+              </div>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary" [routerLink]="['/payment', employee.id, 'newAB']">
+                Avance
+              </button>
+              <button
+                type="submit"
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                [routerLink]="['/employee', employee.id, 'view']"
+                class="btn btn-info btn-sm"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                [routerLink]="['/employee', employee.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" *jhiHasAnyAuthority="['ROLE_ADMIN']" (click)="delete(employee)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="employees && employees.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

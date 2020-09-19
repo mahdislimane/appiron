@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="caisse">
+      <h2><span jhiTranslate="appironApp.caisse.detail.title">Caisse</span> {{ caisse.id }}</h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="appironApp.caisse.date">Date</span></dt>
+        <dd>
+          <span>{{ caisse.date }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.caisse.valeur">Valeur</span></dt>
+        <dd>
+          <span>{{ caisse.valeur }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.caisse.daylyType">Dayly Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'appironApp.DaylyType.' + caisse.daylyType }}">{{ caisse.daylyType }}</span>
+        </dd>
+        <dt><span jhiTranslate="appironApp.caisse.operateur">Operateur</span></dt>
+        <dd>
+          <span>{{ caisse.operateur }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" *jhiHasAnyAuthority="['ROLE_ADMIN']" [routerLink]="['/caisse', caisse.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<div>
+  <h2 id="page-heading">
+    <span jhiTranslate="appironApp.caisse.home.title">Caisses</span>
+
+    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-caisse" [routerLink]="['/caisse/new']">
+      <fa-icon icon="plus"></fa-icon>
+      <span class="hidden-sm-down" jhiTranslate="appironApp.caisse.home.createLabel">
+        Create a new Caisse
+      </span>
+    </button>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'appironApp.caisse.home.search' | translate }}"
+          />
+
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="caisses?.length === 0">
+    <span jhiTranslate="appironApp.caisse.home.notFound">No caisses found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="caisses && caisses.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="date"><span jhiTranslate="appironApp.caisse.date">Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="valeur">
+            <span jhiTranslate="appironApp.caisse.valeur">Valeur</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="daylyType">
+            <span jhiTranslate="appironApp.caisse.daylyType">Dayly Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="operateur">
+            <span jhiTranslate="appironApp.caisse.operateur">Operateur</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let caisse of caisses; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/caisse', caisse.id, 'view']">{{ caisse.id }}</a>
+          </td>
+          <td>{{ caisse.date | date: 'medium' }}</td>
+          <td>{{ caisse.valeur }}</td>
+          <td jhiTranslate="{{ 'appironApp.DaylyType.' + caisse.daylyType }}">{{ caisse.daylyType }}</td>
+          <td>{{ caisse.operateur }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                [routerLink]="['/caisse', caisse.id, 'view']"
+                class="btn btn-info btn-sm"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                [routerLink]="['/caisse', caisse.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" *jhiHasAnyAuthority="['ROLE_ADMIN']" (click)="delete(caisse)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="caisses && caisses.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

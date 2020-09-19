@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-abonne-heading" jhiTranslate="appironApp.abonne.home.createOrEditLabel">Create or edit a Abonne</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input [readOnly]="!canChange" type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonne.firstName" for="field_firstName">First Name</label>
+          <input
+            [readOnly]="!canChange"
+            type="text"
+            class="form-control"
+            name="firstName"
+            id="field_firstName"
+            formControlName="firstName"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonne.lastName" for="field_lastName">Last Name</label>
+          <input [readOnly]="!canChange" type="text" class="form-control" name="lastName" id="field_lastName" formControlName="lastName" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonne.phoneNumber" for="field_phoneNumber">Phone Number</label>
+          <input
+            [readOnly]="!canChange"
+            type="text"
+            class="form-control"
+            name="phoneNumber"
+            id="field_phoneNumber"
+            formControlName="phoneNumber"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonne.cin" for="field_cin">Cin</label>
+          <input [readOnly]="!canChange" type="text" class="form-control" name="cin" id="field_cin" formControlName="cin" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonne.card" for="field_card">Card</label>
+          <input [readOnly]="!canChange" type="text" class="form-control" name="card" id="field_card" formControlName="card" />
+        </div>
+
+        <div *ngIf="currentAbonne.id" class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.abonne.abonnements" for="field_abonnements">Abonnements</label>
+          <div *ngFor="let abonnementsEmploye of abonnementsEmployee">
+            <div *ngIf="abonnementsEmploye.abonnes[0]?.id === currentAbonne.id" class="row">
+              <div class="col-8">
+                <span jhiTranslate="appironApp.AbType.{{ abonnementsEmploye.abType }}"> </span>&nbsp; de &nbsp;
+                {{ abonnementsEmploye.departement }}&nbsp; Prix {{ abonnementsEmploye.price }}&nbsp; Payée &nbsp;
+                {{ abonnementsEmploye.pay }}
+              </div>
+              <div class="col-4">
+                <a [routerLink]="['/abonnement', abonnementsEmploye.id, 'edit']">
+                  <button type="button" class="btn btn-secondary">
+                    Editer un abonnement
+                  </button></a
+                >
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" [routerLink]="['/abonnement', currentAbonne.id, 'newAB']">
+            Ajouter un abonnement
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

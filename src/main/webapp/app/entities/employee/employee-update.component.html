@@ -1,0 +1,105 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-employee-heading" jhiTranslate="appironApp.employee.home.createOrEditLabel">Create or edit a Employee</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.fullName" for="field_fullName">Full Name</label>
+          <input type="text" class="form-control" name="fullName" id="field_fullName" formControlName="fullName" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.jobTitle" for="field_jobTitle">Job Title</label>
+          <select class="form-control" name="jobTitle" formControlName="jobTitle" id="field_jobTitle">
+            <option value="RECEPTION">{{ 'appironApp.JobTitle.RECEPTION' | translate }}</option>
+            <option value="COACH">{{ 'appironApp.JobTitle.COACH' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.phoneNumber" for="field_phoneNumber">Phone Number</label>
+          <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber" formControlName="phoneNumber" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.cin" for="field_cin">Cin</label>
+          <input type="text" class="form-control" name="cin" id="field_cin" formControlName="cin" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.hireDate" for="field_hireDate">Hire Date</label>
+          <div class="d-flex">
+            <input
+              id="field_hireDate"
+              type="datetime-local"
+              class="form-control"
+              name="hireDate"
+              formControlName="hireDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.salary" for="field_salary">Salary</label>
+          <input type="number" class="form-control" name="salary" id="field_salary" formControlName="salary" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.employee.endDate" for="field_endDate">End Date</label>
+          <div class="d-flex">
+            <input
+              id="field_endDate"
+              type="datetime-local"
+              class="form-control"
+              name="endDate"
+              formControlName="endDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="currentEmployee.id" class="form-group">
+          <label class="form-control-label" for="field_payments">Payments</label>
+          <div *ngFor="let paymentsEmploye of paymentsEmployee">
+            <div *ngIf="paymentsEmploye.employees[0]?.id === currentEmployee.id" class="row">
+              <div class="col-8">
+                Le {{ paymentsEmploye.date }} &nbsp; {{ paymentsEmploye.avance }} pour le compte du mois {{ paymentsEmploye.month }} de l'an
+                {{ paymentsEmploye.year }}
+              </div>
+              <div class="col-4">
+                <a [routerLink]="['/payment', paymentsEmploye.id, 'edit']">
+                  <button type="button" class="btn btn-secondary">
+                    Editer une avance
+                  </button></a
+                >
+              </div>
+            </div>
+          </div>
+          <br />
+          <button type="button" class="btn btn-secondary" [routerLink]="['/payment', currentEmployee.id, 'newAB']">
+            Avance
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

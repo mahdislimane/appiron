@@ -1,0 +1,19 @@
+export const enum Departement {
+  MUSCULATION = 'MUSCULATION',
+
+  KICKBOXING = 'KICKBOXING',
+
+  TAEKWONDO = 'TAEKWONDO',
+
+  BOX = 'BOX',
+
+  DANCE = 'DANCE',
+
+  GYMNASTIQUE = 'GYMNASTIQUE',
+
+  KARATE = 'KARATE',
+
+  JIUJITSU = 'JIUJITSU',
+
+  JUDO = 'JUDO',
+}

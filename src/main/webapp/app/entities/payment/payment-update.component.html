@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-payment-heading" jhiTranslate="appironApp.payment.home.createOrEditLabel">Create or edit a Payment</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.payment.date" for="field_date">Date</label>
+          <div class="d-flex">
+            <input
+              id="field_date"
+              type="datetime-local"
+              class="form-control"
+              name="date"
+              formControlName="date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.payment.avance" for="field_avance">Avance</label>
+          <input type="number" class="form-control" name="avance" id="field_avance" formControlName="avance" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.payment.month" for="field_month">Month</label>
+          <select class="form-control" name="month" formControlName="month" id="field_month">
+            <option value="JANVIER">{{ 'appironApp.Month.JANVIER' | translate }}</option>
+            <option value="FEVRIER">{{ 'appironApp.Month.FEVRIER' | translate }}</option>
+            <option value="MARS">{{ 'appironApp.Month.MARS' | translate }}</option>
+            <option value="AVRIL">{{ 'appironApp.Month.AVRIL' | translate }}</option>
+            <option value="MAI">{{ 'appironApp.Month.MAI' | translate }}</option>
+            <option value="JUIN">{{ 'appironApp.Month.JUIN' | translate }}</option>
+            <option value="JUILLET">{{ 'appironApp.Month.JUILLET' | translate }}</option>
+            <option value="AOUT">{{ 'appironApp.Month.AOUT' | translate }}</option>
+            <option value="SEPTEMBRE">{{ 'appironApp.Month.SEPTEMBRE' | translate }}</option>
+            <option value="OCTOBRE">{{ 'appironApp.Month.OCTOBRE' | translate }}</option>
+            <option value="NOVEMBRE">{{ 'appironApp.Month.NOVEMBRE' | translate }}</option>
+            <option value="DECEMBRE">{{ 'appironApp.Month.DECEMBRE' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="appironApp.payment.year" for="field_year">Year</label>
+          <input type="number" class="form-control" name="year" id="field_year" formControlName="year" />
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_utilisateur">Utilisateur</label>
+          <select class="form-control" name="utilisateur" formControlName="utilisateur" id="field_utilisateur">
+            <option *ngFor="let employee of giverEmployee" value="{{ employee?.fullName }}">{{ employee?.fullName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

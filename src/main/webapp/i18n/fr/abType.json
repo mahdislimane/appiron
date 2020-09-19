@@ -1,0 +1,15 @@
+{
+  "appironApp": {
+    "AbType": {
+      "null": "",
+      "SEANCE": "SEANCE",
+      "SEMAINE1": "1 SEMAINE",
+      "SEMAINE2": "2 SEMAINE",
+      "MOIS1": "1 MOIS",
+      "MOIS2": "2 MOIS",
+      "MOIS3": "3 MOIS",
+      "MOIS6": "6 MOIS",
+      "AN": "1 AN"
+    }
+  }
+}
